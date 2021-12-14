@@ -1,47 +1,24 @@
 import React, { useEffect, useState } from "react";
 import Text from "components/Text";
 import Spinner from "components/Spinner";
-import CheckBox from "components/CheckBox";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import * as S from "./style";
 
 
-const UserList = ({ users, isLoading }) => {
-
-  const [isCheckCountry, setCheckCountry] = useState({BR: false, AU: false,CA: false, DE: false});
-  const [country, setCountry] = useState({Brazil: "BR", Australia: "AU", Canada: "CA", Germany: "DE"});
-  const [count,setCount]=useState(0);
+const FavoriteList = ({ isLoading }) => {
 
   const [hoveredUserId, setHoveredUserId] = useState();
   const [favorites, setFavorites] = useState([]);
   
   useEffect(() => { 
     setFavorites(JSON.parse(localStorage.getItem("favorites")))
+    console.log(JSON.parse(localStorage.getItem("favorites"))) 
   },[]);
-    
-  useEffect(() => { 
-    localStorage.setItem("favorites",JSON.stringify(favorites))} ,[favorites]);
-
-
-  const handleChange =(value) =>
-  {
-      if(isCheckCountry[value])
-        setCount(count-1);
-      else
-        setCount(count+1);
-      setCheckCountry({...isCheckCountry, [value]: !isCheckCountry[value]});
-  }; 
-   
-    const getUser=(user)=>
-    {
-      if(count===0)
-        return true;
-      if(isCheckCountry[country[user.location.country]]== true )
-        return true;
-      return false;
-    };
-
+  
+  useEffect(() => {
+    //localStorage.clear();
+    localStorage.setItem("favorites",JSON.stringify(favorites)) } ,[favorites]);
 
   const handleMouseEnter = (user) => {
     setHoveredUserId(user);
@@ -58,10 +35,7 @@ const UserList = ({ users, isLoading }) => {
       setFavorites(favorites.slice(0,x).concat(favorites.slice(x+1)));
     }
     else
-    {
       setFavorites([...favorites, user]);
-      //localStorage.clear();
-    }
   };
 
   const getVisible=(user)=>
@@ -72,15 +46,9 @@ const UserList = ({ users, isLoading }) => {
   };
 
   return (
-    <S.UserList>
-      <S.Filters>
-        <CheckBox value="BR" label="Brazil" onChange={handleChange} isChecked={isCheckCountry.BR} />
-        <CheckBox value="AU" label="Australia" onChange={handleChange} isChecked={isCheckCountry.AU}/>
-        <CheckBox value="CA" label="Canada" onChange={handleChange} isChecked={isCheckCountry.CA}/>
-        <CheckBox value="DE" label="Germany" onChange={handleChange} isChecked={isCheckCountry.DE}/>
-      </S.Filters>
+    <S.FavoriteList>
       <S.List>
-        {users.filter(getUser).map((user, index) => {
+        {favorites.map((user, index) => {
             return (
               <S.User
                 key={index}
@@ -116,8 +84,8 @@ const UserList = ({ users, isLoading }) => {
           </S.SpinnerWrapper>
         )}
       </S.List>
-    </S.UserList>
+    </S.FavoriteList>
   );
 };
 
-export default UserList;
+export default FavoriteList;
