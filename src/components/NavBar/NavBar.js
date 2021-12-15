@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";  
-import { Refresh } from "@material-ui/icons";
+import { useHistory } from "react-router-dom";
+
 
 
 const NavBar = (props) => {
   const [value, setValue] = useState(0);
+  const history = useHistory();
 
   
   const handleChange = (_e, newValue) => {
@@ -25,8 +27,8 @@ const NavBar = (props) => {
         indicatorColor="primary"
         textColor="primary"
       >
-        <Tab label="Home" index={0} href="/"  />
-        <Tab label="Favorites" index={1} href="/Favorites"  />
+        <Tab label="Home" index={0}  onClick={()=>{history.push("/")}}/>
+        <Tab label="Favorites" index={1} onClick={()=>{history.push("/Favorites")}}/>
       </Tabs>
     </AppBar>
   );
