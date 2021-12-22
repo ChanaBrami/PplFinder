@@ -9,8 +9,8 @@ import * as S from "./style";
 
 const UserList = ({ users, isLoading }) => {
 
-  const [isCheckCountry, setCheckCountry] = useState({BR: false, AU: false,CA: false, DE: false});
-  const [country, setCountry] = useState({Brazil: "BR", Australia: "AU", Canada: "CA", Germany: "DE"});
+  const [isCheckCountry, setCheckCountry] = useState({BR: false, AU: false,CA: false, GE: false, FR: false});
+  const [country, setCountry] = useState({Brazil: "BR", Australia: "AU", Canada: "CA", Germany: "GE", France:"FR"});
   const [count,setCount]=useState(0);
 
   const [hoveredUserId, setHoveredUserId] = useState();
@@ -77,7 +77,9 @@ const UserList = ({ users, isLoading }) => {
         <CheckBox value="BR" label="Brazil" onChange={handleChange} isChecked={isCheckCountry.BR} />
         <CheckBox value="AU" label="Australia" onChange={handleChange} isChecked={isCheckCountry.AU}/>
         <CheckBox value="CA" label="Canada" onChange={handleChange} isChecked={isCheckCountry.CA}/>
-        <CheckBox value="DE" label="Germany" onChange={handleChange} isChecked={isCheckCountry.DE}/>
+        <CheckBox value="GE" label="Germany" onChange={handleChange} isChecked={isCheckCountry.GE}/>
+        <CheckBox value="FR" label="France" onChange={handleChange} isChecked={isCheckCountry.FR}/>
+        
       </S.Filters>
       <S.List>
         {users.filter(getUser).map((user, index) => {
